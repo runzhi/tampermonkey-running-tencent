@@ -1,1 +1,28 @@
-{"created_by":"Tampermonkey","version":"1","scripts":[{"name":"Show debug option for running","options":{"awareOfChrome":false,"comment":"","compat_arrayleft":false,"compat_foreach":false,"compat_forvarin":false,"compat_metadata":false,"compat_uW_gmonkey":false,"compat_wrappedjsobject":false,"compatopts_for_requires":true,"noframes":null,"override":{"excludes":false,"includes":false,"matches":false,"merge_excludes":true,"merge_includes":true,"merge_matches":true,"orig_excludes":[],"orig_includes":[],"orig_matches":["http://running.webdev.com/*"],"orig_noframes":null,"orig_run_at":"document-idle","use_excludes":[],"use_includes":[],"use_matches":[]},"run_at":null,"user_agent":""},"storage":{"ts":1444874870012,"data":{}},"enabled":true,"position":1,"uuid":"3424963f-f9c1-4c5c-b89e-3585ffda2ef7","source":"Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICBTaG93IGRlYnVnIG9wdGlvbiBmb3IgcnVubmluZwovLyBAbmFtZXNwYWNlICAgIGh0dHA6Ly95b3VyLmhvbWVwYWdlLwovLyBAdmVyc2lvbiAgICAgIDAuMQovLyBAZGVzY3JpcHRpb24gIGVudGVyIHNvbWV0aGluZyB1c2VmdWwKLy8gQGF1dGhvciAgICAgICBZb3UKLy8gQG1hdGNoICAgICAgICBodHRwOi8vcnVubmluZy53ZWJkZXYuY29tLyoKLy8gQGdyYW50ICAgICAgICBub25lCi8vID09L1VzZXJTY3JpcHQ9PQoKCihmdW5jdGlvbigpewogICAgdmFyIGRlYnVnX2J1dHRvbiA9ICQoIjxhPiIpLnRleHQoIuiwg+ivlSIpLmF0dHIoImhyZWYiLCAiIyIpLmNsaWNrKGZ1bmN0aW9uKCl7CiAgICAgICAgJHRhYmxlID0gJCgiLnRhYmxlLnRhYmxlLWhvdmVyLnRhYmxlLWxpc3QiKTsKICAgICAgICAkdGFibGUuZmluZCgidHIubmctc2NvcGUiKS5lYWNoKGZ1bmN0aW9uKCl7CiAgICAgICAgICAgICRpZCA9ICQoJCh0aGlzKS5maW5kKCJ0ZCIpWzBdKS50ZXh0KCk7CiAgICAgICAgICAgICRidXR0b25fY29udGFpbmVyID0gICQodGhpcykuZmluZCgiLm9wZXItYnRuIik7CiAgICAgICAgICAgIGlmKCRidXR0b25fY29udGFpbmVyLmZpbmQoIi5kZWJ1Z19idXR0b24iKS5zaXplKCkgPT0gMCl7CiAgICAgICAgICAgICAgICAkYnV0dG9uX2NvbnRhaW5lci5hcHBlbmQoJzxhIGNsYXNzPSJidG4tZXhwb3J0IGRlYnVnX2J1dHRvbiIgYWx0PSLosIPluqbnu5PmnpwiIHRpdGxlPSLosIPluqbnu5PmnpwiIHRhcmdldD0iX2JsYW5rIiBocmVmPSJqb2IvcmVzdWx0P3Rhc2tJZD0nICsgJGlkICsgJyI+6LCD5bqm57uT5p6cPC9hPicpOwogICAgICAgICAgICAgICAgJGJ1dHRvbl9jb250YWluZXIuYXBwZW5kKCc8YSBjbGFzcz0iYnRuLWV4cG9ydCBkZWJ1Z19idXR0b24iIGFsdD0i5omn6KGM57uT5p6cIiB0aXRsZT0i5omn6KGM57uT5p6cIiB0YXJnZXQ9Il9ibGFuayIgaHJlZj0iam9iL2pvYmxvZz90YXNrSWQ9JyArICRpZCArICciPuaJp+ihjOe7k+aenDwvYT4nKTsKICAgICAgICAgICAgfQogICAgICAgICAgICAKICAgICAgICB9KTsKICAgIH0pOwoKCiAgICAkKCJib2R5IikucHJlcGVuZChkZWJ1Z19idXR0b24pOwp9KSgpOw=="}]}
+// ==UserScript==
+// @name         Show debug option for running
+// @namespace    http://your.homepage/
+// @version      0.1
+// @description  enter something useful
+// @author       You
+// @match        http://running.webdev.com/*
+// @grant        none
+// ==/UserScript==
+
+
+(function(){
+    var debug_button = $("<a>").text("调试").attr("href", "#").click(function(){
+        $table = $(".table.table-hover.table-list");
+        $table.find("tr.ng-scope").each(function(){
+            $id = $($(this).find("td")[0]).text();
+            $button_container =  $(this).find(".oper-btn");
+            if($button_container.find(".debug_button").size() === 0){
+                $button_container.append('<a class="btn-export debug_button" alt="调度结果" title="调度结果" target="_blank" href="job/result?taskId=' + $id + '">调度结果</a>');
+                $button_container.append('<a class="btn-export debug_button" alt="执行结果" title="执行结果" target="_blank" href="job/joblog?taskId=' + $id + '">执行结果</a>');
+            }
+            
+        });
+    });
+
+
+    $("body").prepend(debug_button);
+})();
